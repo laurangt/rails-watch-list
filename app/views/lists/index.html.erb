@@ -1,0 +1,26 @@
+<div class="navbar" data-controller="navbar" data-action="scroll@window->navbar#updateNavbar">
+  <i class="fa-solid fa-film"></i>
+  <div class="link">
+    <p class="link">My lists</p>
+    <p class="link">New list</p>
+  </div>
+</div>
+<div class="banner">
+  <p><%= image_tag "background.jpg", alt: "Le Wagon", width: 400, height: 300 %></p>
+  <h1>Save any kind of movies</h1>
+</div>
+
+
+<div class="content">
+    <div id="text-above-lists">
+      <h2>My lists</h2>
+      <%= link_to "Create a movie list", new_list_path %>
+    </div>
+  <div class="cards">
+    <% @lists.each do |list| %>
+      <div class="card">
+        <p><%= list.name %></p>
+        <p><%= link_to "Delete", list_path(list), data: {turbo_method: :delete, turbo_confirm: "Are you sure?"} %></p>      </div>
+    <% end %>
+  </div>
+</div>
