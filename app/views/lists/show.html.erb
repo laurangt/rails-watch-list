@@ -1,4 +1,7 @@
 <h1>Welcome to the <strong><%= @list.name.upcase %></strong> list</h1>
+<% if @list.photo.present?%>
+  <%= cl_image_tag @list.photo.key, height: 300, width: 600, crop: :fill %>
+<% end %>
 <p><% @list.bookmarks.each do |bookmark| %></p>
   <p><%= bookmark.movie.title %></p>
   <p><%= bookmark.comment %></p>
