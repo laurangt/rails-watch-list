@@ -20,6 +20,7 @@
     <% @lists.each do |list| %>
       <div class="card">
         <p><%= list.name %></p>
+        <p><%= link_to "See more", list_path(list) %></p>
         <p><%= link_to "Delete", list_path(list), data: {turbo_method: :delete, turbo_confirm: "Are you sure?"} %></p>      </div>
     <% end %>
   </div>
