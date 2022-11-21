@@ -1,12 +1,49 @@
-<h1>Welcome to the <strong><%= @list.name.upcase %></strong> list</h1>
-<% if @list.photo.present?%>
-  <%= cl_image_tag @list.photo.key, height: 300, width: 600, crop: :fill %>
-<% end %>
-<p><% @list.bookmarks.each do |bookmark| %></p>
-  <p><%= bookmark.movie.title %></p>
-  <p><%= bookmark.comment %></p>
-  <p><%= link_to "Delete bookmark", bookmark_path(bookmark), data: {turbo_method: :delete, turbo_confirm: "Are you sure?"} %></p>      </div>
+<div class="navbar" data-controller="navbar" data-action="scroll@window->navbar#updateNavbar">
+  <i class="fa-solid fa-film"></i>
+  <div class="top-right">
+    <p>My lists</p>
+    <p>New list</p>
+  </div>
+</div>
 
+<div class="banner">
+  <% if @list.photo.present?%>
+    <%= cl_image_tag @list.photo.key, crop: :fill, style:"object-position: 0 23%;" %>
+      <h1 class="centered card text-dark bg-light p-2"><%= @list.name.upcase %></h1>
+  <% else %>
+    <img src="https://res.cloudinary.com/dqpgsz5ed/image/upload/v1668786243/empty-cinema_rfr3tg.jpg" alt="cinema background pic">
+    <h1 class="centered card text-dark bg-light p-2"><%= @list.name.upcase %></h1>
+    </div>
+  <% end %>
+</div>
+
+<div class="text-above-bookmarks">
+  <%= link_to lists_path do %>
+    <i class="fa-solid fa-arrow-left"></i>
+  <% end %>
+  <p><%= link_to "Add a bookmark", new_list_bookmark_path(@list) %></p>
+</div>
+
+<div class="container">
+  <div class="row">
+    <% @list.bookmarks.each do |bookmark| %>
+      <div class="col-6 list">
+        <div class="card movie">
+          <h2><%= bookmark.movie.title %></h2>
+          <p id="comment"><%= bookmark.comment %></p>
+          <p class="link bottom-right"><%= link_to "Delete bookmark", bookmark_path(bookmark), data: {turbo_method: :delete, turbo_confirm: "Are you sure?"}, class: "text-danger" %></p>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+<h1>Create new bookmark</h1>
+
+<%= simple_form_for [@list, @bookmark] do |f| %>
+  <%= f.input :comment %>
+  <%= f.association :movie %>
+  <%= f.button :submit %>
 <% end %>
-<p><%= link_to "Create a bookmark", new_list_bookmark_path(@list) %></p>
-<p><%= link_to "Go Back", lists_path %></p>
+
+<%= link_to "Go back", lists_path %>

@@ -1,34 +1,40 @@
+
 <div class="navbar" data-controller="navbar" data-action="scroll@window->navbar#updateNavbar">
   <i class="fa-solid fa-film"></i>
-  <div class="link">
-    <p>My lists</p>
-    <p>New list</p>
+  <div class="top-right">
+    <a href="#my-lists">My lists</a>
+    <p class="link"><%= link_to "New list", new_list_path %></p>
   </div>
 </div>
 
 <div class="banner">
-  <%= cl_image_tag("v1668786243/empty-cinema_rfr3tg.jpg", width: 400, height: 300, crop: :fill) %>
-  <h1>Save any kind of movies</h1>
+  <img src="https://res.cloudinary.com/dqpgsz5ed/image/upload/v1668786243/empty-cinema_rfr3tg.jpg" alt="cinema background pic">
+  <h1>Movie lists</h1>
+
 </div>
 
 <div class="content">
-  <div id="text-above-lists">
-    <h3>My lists</h3>
+  <div class="text-above-lists">
+    <h3 id="my-lists">My lists</h3>
     <p class="link"><%= link_to "Create a movie list", new_list_path %></p>
   </div>
-  <div class="container">
-    <div class="row">
-        <% @lists.each do |list| %>
-          <div class="col-6 list">
-            <%= link_to list_path(list), class: "" do %>
-              <p id="list-name link"><%= list.name.upcase %></p>
-              <% if list.photo.present?%>
-                <%= cl_image_tag list.photo.key, style: "width: 100%; height: 250px; object-fit: cover;", crop: :fill %>
-              <% end %>
-              <p class="link"><%= link_to "Delete", list_path(list), data: {turbo_method: :delete, turbo_confirm: "Are you sure?"} %></p>
+</div>
+<div class="container">
+  <div class="row">
+      <% @lists.each do |list| %>
+        <div class="col-6 list">
+          <%= link_to list_path(list) do %>
+            <% if list.photo.present?%>
+              <div class="card" style="background-image: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('<%= cl_image_path list.photo.key, crop: :fill %>')">
+                <h3 class="centered link"><%= list.name.upcase %></h3>
+                <p class="link bottom-right"><%= link_to "Delete", list_path(list), data: {turbo_method: :delete, turbo_confirm: "Are you sure?"} %></p>
+            <% else %>
+                <h3><%= list.name.upcase %></h3>
+                <p class="link bottom-right"><%= link_to "Delete", list_path(list), data: {turbo_method: :delete, turbo_confirm: "Are you sure?"} %></p>
             <% end %>
-          </div>
-        <% end %>
-    </div>
+              </div>
+          <% end %>
+        </div>
+      <% end %>
   </div>
 </div>
