@@ -21,7 +21,6 @@
   <%= link_to lists_path do %>
     <i class="fa-solid fa-arrow-left"></i>
   <% end %>
-  <p><%= link_to "Add a bookmark", new_list_bookmark_path(@list) %></p>
 </div>
 
 <div class="container">
@@ -38,12 +37,10 @@
   </div>
 </div>
 
-<h1>Create new bookmark</h1>
-
-<%= simple_form_for [@list, @bookmark] do |f| %>
-  <%= f.input :comment %>
-  <%= f.association :movie %>
-  <%= f.button :submit %>
-<% end %>
-
-<%= link_to "Go back", lists_path %>
+<div class="form">
+  <%= simple_form_for [@list, @bookmark] do |f| %>
+    <%= f.input :comment %>
+    <%= f.association :movie %>
+    <%= f.button :submit %>
+  <% end %>
+</div>
